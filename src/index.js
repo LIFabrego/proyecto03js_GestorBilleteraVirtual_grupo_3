@@ -1,4 +1,6 @@
 let usuarios = [];
+let listaTransaccionesVisible = false;
+let listaMaximaTransaccionesVisible=false;
 
 function agregarUsuarios() {
 
@@ -16,24 +18,36 @@ function agregarUsuarios() {
     document.getElementById('billetera').value = '';
     document.getElementById('transaccion').value = '';
     cargaAlerta();
+    ocultarListas();
    
 }
 
 function listaUsuarios() {
+
     const contenedorLista = document.getElementById('contenedorLista');
-    contenedorLista.innerHTML = ''; 
-//Muestra de registro de Usuario fue cambiado, de div a li para que se muestre en pantalla en forma de lista
-    usuarios.forEach(cuenta => {
-        const li = document.createElement('li');
-        li.classList.add('user-list-item');
-        li.textContent = `${cuenta.nombre}, ${cuenta.billetera}, ${cuenta.transaccion}`;
-        contenedorLista.appendChild(li);
-    });
+    if (listaTransaccionesVisible) {
+        contenedorLista.innerHTML = '';
+        listaTransaccionesVisible = false;
+        return;
+    }
+        //Muestra de registro de Usuario fue cambiado, de div a li para que se muestre en pantalla en forma de lista
+        usuarios.forEach(cuenta => {
+            const li = document.createElement('li');
+            li.classList.add('user-list-item');
+            li.textContent = `${cuenta.nombre}, ${cuenta.billetera}, ${cuenta.transaccion}`;
+            contenedorLista.appendChild(li);
+        });
+    listaTransaccionesVisible=true;
+
 }
 
 function billeteraMasTransacciones() {
     const transaccionMaxima = document.getElementById('transaccionMaxima');
-
+    if (listaMaximaTransaccionesVisible) {
+        transaccionMaxima.innerHTML = '';
+        listaMaximaTransaccionesVisible = false;
+        return;
+    }
     if (usuarios.length === 0) return;
     const transaccionesPorUsuario = {};
     usuarios.forEach(function(transaccion){
@@ -54,11 +68,21 @@ function billeteraMasTransacciones() {
         resultado += `${nombre}: ${billeteraConMasTransacciones[0]} ${billeteraConMasTransacciones[1]} transacciones <br>`;
         console.log(resultado);
     });
+
     transaccionMaxima.innerHTML = resultado;
+    listaMaximaTransaccionesVisible=true;
 }
 function cargaAlerta(){
     swal({
         text: "Se ha cargado correctamente",
         icon: "success",
     });
+}
+function ocultarListas(){
+    //oculta lista de transacciones
+    contenedorLista.innerHTML = '';
+    listaTransaccionesVisible = false;
+    //oculta lista de billetera con mas Transacciones
+    transaccionMaxima.innerHTML = '';
+    listaMaximaTransaccionesVisible = false;
 }
