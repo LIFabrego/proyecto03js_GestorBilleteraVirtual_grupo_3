@@ -11,7 +11,17 @@ function agregarUsuarios() {
         return;
     }
 
-        usuarios.push({ nombre, billetera, transaccion });
+     let usuarioExistente = usuarios.find(cuenta => cuenta.nombre === nombre && cuenta.billetera === billetera);
+
+     if (usuarioExistente) {
+         usuarioExistente.transaccion += transaccion;
+         alert('Las transacciones han sido acumuladas.');
+     } else {
+         usuarios.push({ nombre, billetera, transaccion });
+         alert('Información guardada con éxito.');
+     }
+
+        
     listaUsuarios();
     document.getElementById('nombre').value = '';
     document.getElementById('billetera').value = '';
@@ -34,27 +44,35 @@ function listaUsuarios() {
 function billeteraMasTransacciones() {
     const transaccionMaximaLista = document.getElementById('transaccionMaximaLista');
 
+    transaccionMaximaLista.innerHTML = ''; 
+
     if (usuarios.length === 0) return;
     const transaccionesPorUsuario = {};
+    
     usuarios.forEach(function(transaccion){
-        if(!transaccionesPorUsuario[transaccion.nombre]){
-            transaccionesPorUsuario[transaccion.nombre]={}; 
+        if (!transaccionesPorUsuario[transaccion.nombre]) {
+            transaccionesPorUsuario[transaccion.nombre] = {};
         }
-        //en caso de que las billeteras esten repetidas para un mismo usuario se suma el numero de transacciones
+
         if (transaccionesPorUsuario[transaccion.nombre][transaccion.billetera]) {
             transaccionesPorUsuario[transaccion.nombre][transaccion.billetera] += transaccion.transaccion;
         } else {
             transaccionesPorUsuario[transaccion.nombre][transaccion.billetera] = transaccion.transaccion;
         }        
     });
-    //muestra del resultado maximo por cada uno de los usuarios
-    let resultado ='';
-    Object.entries(transaccionesPorUsuario).forEach(([nombre,billetera])=>{
-        const billeteraConMasTransacciones = Object.entries(billetera).reduce((prev,current)=>(prev[1]>current[1]?prev:current));
+
+    const usuariosConMaxTransacciones = Object.entries(transaccionesPorUsuario).map(([nombre, billeteras]) => {
+        const billeteraConMasTransacciones = Object.entries(billeteras).reduce((prev, current) => (prev[1] > current[1] ? prev : current));
+        return { nombre, billetera: billeteraConMasTransacciones[0], transacciones: billeteraConMasTransacciones[1] };
+    });
+
+    // se puede modificar para mostrar los primeros x usuarios
+    const topUsuarios = usuariosConMaxTransacciones.sort((a, b) => b.transacciones - a.transacciones).slice(0, 5);
+
+    topUsuarios.forEach(usuario => {
         const div = document.createElement('div');
         div.classList.add('user-max-list-item');
-        div.textContent= `${nombre}, ${billeteraConMasTransacciones[0]},${billeteraConMasTransacciones[1]}`;
+        div.textContent = `${usuario.nombre}, ${usuario.billetera}, ${usuario.transacciones}`;
         transaccionMaximaLista.appendChild(div);
     });
-    //el codigo funciona, pero cada vez que se presiona el boton genera nuevas etiquetas div.. nesita ajustes
 }
