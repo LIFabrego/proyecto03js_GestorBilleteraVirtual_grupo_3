@@ -12,7 +12,6 @@ function agregarUsuarios() {
     }
 
         usuarios.push({ nombre, billetera, transaccion });
-    listaUsuarios();
     document.getElementById('nombre').value = '';
     document.getElementById('billetera').value = '';
     document.getElementById('transaccion').value = '';
