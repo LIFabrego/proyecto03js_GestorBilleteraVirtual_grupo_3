@@ -32,7 +32,7 @@ function listaUsuarios() {
 }
 
 function billeteraMasTransacciones() {
-    const transaccionMaximaLista = document.getElementById('transaccionMaximaLista');
+    const transaccionMaxima = document.getElementById('transaccionMaxima');
 
     if (usuarios.length === 0) return;
     const transaccionesPorUsuario = {};
@@ -51,10 +51,8 @@ function billeteraMasTransacciones() {
     let resultado ='';
     Object.entries(transaccionesPorUsuario).forEach(([nombre,billetera])=>{
         const billeteraConMasTransacciones = Object.entries(billetera).reduce((prev,current)=>(prev[1]>current[1]?prev:current));
-        const div = document.createElement('div');
-        div.classList.add('user-max-list-item');
-        div.textContent= `${nombre}, ${billeteraConMasTransacciones[0]},${billeteraConMasTransacciones[1]}`;
-        transaccionMaximaLista.appendChild(div);
+        resultado += `${nombre}: ${billeteraConMasTransacciones[0]} ${billeteraConMasTransacciones[1]} transacciones <br>`;
+        console.log(resultado);
     });
-    //el codigo funciona, pero cada vez que se presiona el boton genera nuevas etiquetas div.. nesita ajustes
+    transaccionMaxima.innerHTML = resultado;
 }
