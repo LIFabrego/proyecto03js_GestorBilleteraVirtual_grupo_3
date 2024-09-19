@@ -1,5 +1,4 @@
 let usuarios = [];
-let listaTransaccionesVisible = false;
 let listaMaximaTransaccionesVisible=false;
 
 function agregarUsuarios() {
@@ -13,11 +12,12 @@ function agregarUsuarios() {
         return;
     }
 
-        usuarios.push({ nombre, billetera, transaccion });
+    usuarios.push({ nombre, billetera, transaccion });
     document.getElementById('nombre').value = '';
     document.getElementById('billetera').value = '';
     document.getElementById('transaccion').value = '';
     cargaAlerta();
+    listaUsuarios();
     ocultarListas();
    
 }
@@ -25,11 +25,8 @@ function agregarUsuarios() {
 function listaUsuarios() {
 
     const contenedorLista = document.getElementById('contenedorLista');
-    if (listaTransaccionesVisible) {
-        contenedorLista.innerHTML = '';
-        listaTransaccionesVisible = false;
-        return;
-    }
+    contenedorLista.innerHTML='';  
+
         //Muestra de registro de Usuario fue cambiado, de div a li para que se muestre en pantalla en forma de lista
         usuarios.forEach(cuenta => {
             const li = document.createElement('li');
@@ -37,7 +34,6 @@ function listaUsuarios() {
             li.textContent = `${cuenta.nombre}, ${cuenta.billetera}, ${cuenta.transaccion}`;
             contenedorLista.appendChild(li);
         });
-    listaTransaccionesVisible=true;
 
 }
 
@@ -79,9 +75,7 @@ function cargaAlerta(){
     });
 }
 function ocultarListas(){
-    //oculta lista de transacciones
-    contenedorLista.innerHTML = '';
-    listaTransaccionesVisible = false;
+
     //oculta lista de billetera con mas Transacciones
     transaccionMaxima.innerHTML = '';
     listaMaximaTransaccionesVisible = false;
