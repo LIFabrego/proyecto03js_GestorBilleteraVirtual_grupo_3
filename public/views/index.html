@@ -43,11 +43,18 @@
             <button type="button" class="btn btn-success" onclick="billeteraMasTransacciones()"><h4>Billetera con más transacciones</h4></button>
             </div>
             <br>
-            <table id="contenedorLista" class="table-primary tabla-usuario "></table>
-            <h4 id="transaccionMaximaLista" class="mt-4 text-center">
+            <!--Etiqueta que muestra de manera lista -->
+            <form class="container">
+            <ul>            
+                <li id="contenedorLista" class="table-primary tabla-usuario "></li>
+            </ul>
+        </form>
+        <form class="container">
+              <h4 id="transaccionMaximaLista" class="mt-4 text-center">
              Maximas Transacciones por Usuario:
-             </h4>
-            <p  id="transaccionMaxima"></p>
+              </h4>
+            <p id="transaccionMaxima"></p>
+        </form>
     </div>
 </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

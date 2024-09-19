@@ -22,12 +22,12 @@ function agregarUsuarios() {
 function listaUsuarios() {
     const contenedorLista = document.getElementById('contenedorLista');
     contenedorLista.innerHTML = ''; 
-
+//Muestra de registro de Usuario fue cambiado, de div a li para que se muestre en pantalla en forma de lista
     usuarios.forEach(cuenta => {
-        const div = document.createElement('div');
-        div.classList.add('user-list-item');
-        div.textContent = `${cuenta.nombre}, ${cuenta.billetera}, ${cuenta.transaccion}`;
-        contenedorLista.appendChild(div);
+        const li = document.createElement('li');
+        li.classList.add('user-list-item');
+        li.textContent = `${cuenta.nombre}, ${cuenta.billetera}, ${cuenta.transaccion}`;
+        contenedorLista.appendChild(li);
     });
 }
 
