@@ -16,6 +16,7 @@ function agregarUsuarios() {
     document.getElementById('nombre').value = '';
     document.getElementById('billetera').value = '';
     document.getElementById('transaccion').value = '';
+    cargaAlerta();
    
 }
 
@@ -55,4 +56,10 @@ function billeteraMasTransacciones() {
         console.log(resultado);
     });
     transaccionMaxima.innerHTML = resultado;
+}
+function cargaAlerta(){
+    swal({
+        text: "Se ha cargado correctamente",
+        icon: "success",
+    });
 }
