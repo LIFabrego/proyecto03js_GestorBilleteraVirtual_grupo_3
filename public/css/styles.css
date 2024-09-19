@@ -30,7 +30,7 @@ h1 {
 }
 
 body {
-    background-image: url(images/bg.png);
+    background-image: url(../images/bg.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -42,6 +42,7 @@ body {
 .container{
     background-color: rgb(226, 248, 243);
     border-radius: 10px;
-    box-shadow: 7px 15px 20px rgb(83, 116, 187);
+    box-shadow: 7px 15px 20px rgb(81, 206, 255);
     margin-top: 40px;
+    padding: 20px;
 }
