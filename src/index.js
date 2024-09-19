@@ -1,4 +1,5 @@
 let usuarios = [];
+let listaMaximaTransaccionesVisible=false;
 
 function agregarUsuarios() {
 
@@ -11,30 +12,38 @@ function agregarUsuarios() {
         return;
     }
 
-        usuarios.push({ nombre, billetera, transaccion });
-    listaUsuarios();
+    usuarios.push({ nombre, billetera, transaccion });
     document.getElementById('nombre').value = '';
     document.getElementById('billetera').value = '';
     document.getElementById('transaccion').value = '';
     cargaAlerta();
+    listaUsuarios();
+    ocultarListas();
    
 }
 
 function listaUsuarios() {
+
     const contenedorLista = document.getElementById('contenedorLista');
-    contenedorLista.innerHTML = ''; 
-//Muestra de registro de Usuario fue cambiado, de div a li para que se muestre en pantalla en forma de lista
-    usuarios.forEach(cuenta => {
-        const li = document.createElement('li');
-        li.classList.add('user-list-item');
-        li.textContent = `${cuenta.nombre}, ${cuenta.billetera}, ${cuenta.transaccion}`;
-        contenedorLista.appendChild(li);
-    });
+    contenedorLista.innerHTML='';  
+
+        //Muestra de registro de Usuario fue cambiado, de div a li para que se muestre en pantalla en forma de lista
+        usuarios.forEach(cuenta => {
+            const li = document.createElement('li');
+            li.classList.add('user-list-item');
+            li.textContent = `${cuenta.nombre}, ${cuenta.billetera}, ${cuenta.transaccion}`;
+            contenedorLista.appendChild(li);
+        });
+
 }
 
 function billeteraMasTransacciones() {
     const transaccionMaxima = document.getElementById('transaccionMaxima');
-
+    if (listaMaximaTransaccionesVisible) {
+        transaccionMaxima.innerHTML = '';
+        listaMaximaTransaccionesVisible = false;
+        return;
+    }
     if (usuarios.length === 0) return;
     const transaccionesPorUsuario = {};
     usuarios.forEach(function(transaccion){
@@ -55,11 +64,19 @@ function billeteraMasTransacciones() {
         resultado += `${nombre}: ${billeteraConMasTransacciones[0]} ${billeteraConMasTransacciones[1]} transacciones <br>`;
         console.log(resultado);
     });
+
     transaccionMaxima.innerHTML = resultado;
+    listaMaximaTransaccionesVisible=true;
 }
 function cargaAlerta(){
     swal({
         text: "Se ha cargado correctamente",
         icon: "success",
     });
+}
+function ocultarListas(){
+
+    //oculta lista de billetera con mas Transacciones
+    transaccionMaxima.innerHTML = '';
+    listaMaximaTransaccionesVisible = false;
 }
